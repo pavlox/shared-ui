@@ -8,19 +8,23 @@
 		sideTabItem     = $( '#demo-side-tabs-options .sui-tab-item' )
 		;
 
+	// ============================================================
 	// Offset scroll for showcase sidenav.
 	function offsetAnchor() {
 		if ( 0 !== location.hash.length ) {
 			window.scrollTo( window.scrollX, window.scrollY - 60 );
 		}
 	}
+
 	$( document ).on( 'click', '#adminmenu a[href^="#"], .demo-internal-link[href^="#"]', function( event ) {
 		window.setTimeout( function() {
 			offsetAnchor();
 		}, 0 );
 	});
+
 	window.setTimeout( offsetAnchor, 0 );
 
+	// ============================================================
 	// Initialize highlight js for demo code blocks.
 	$( '.demo-code-block .sui-code-snippet' ).each( function( i, block ) {
 		hljs.highlightBlock( block );
@@ -32,6 +36,8 @@
 		$( this ).wrap( '<div class="sui-col-md-3 sui-col-sm-4"><button role="button" data-clipboard-text="&lt;i class=&quot;sui-icon-' + iconName + '&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;" class="demo-icon"></button></div>' ).after( '<span class="demo-icon-name"><span class="sui-screen-reader-text">Example of </span>' + iconName + '</span>' );
 	});
 
+	// ============================================================
+	// Datepicker
 	$( '.sui-date .sui-form-control' ).datepicker({
 		beforeShow: function( input, inst ) {
 			$( '#ui-datepicker-div' ).addClass( 'sui-calendar' );
@@ -39,12 +45,16 @@
 		'dateFormat': 'd MM yy'
 	});
 
+	// ============================================================
+	// Clipboard
 	clipboard.on( 'success', function( e ) {
 		console.info( 'Copied:', e.text );
 		showTooltip( e.trigger, 'Copied Icon!' );
 		e.clearSelection();
 	});
 
+	// ============================================================
+	// Tooltips
 	btns.mouseleave( function() {
 		$( this ).removeClass( 'sui-tooltip' );
 		$( this ).removeAttr( 'aria-label' );
@@ -57,6 +67,7 @@
 		$( e ).attr( 'data-tooltip', msg );
 	}
 
+	// ============================================================
 	// Side navigation
 	navbutton.on( 'click', function( e ) {
 		currentNav( e.target );
@@ -82,6 +93,7 @@
 		boxData.show();
 	}
 
+	// ============================================================
 	// Accordion
 	toggleAccordion.each( function() {
 
@@ -121,6 +133,7 @@
 		}
 	}
 
+	// ============================================================
 	// Pagination filter
 	demoPagFilter.on( 'click', function( e ) {
 		openFilter( e.target );
@@ -138,6 +151,7 @@
 		pagFilter.toggleClass( 'sui-open' );
 	}
 
+	// ============================================================
 	// Side tabs
 	// Demo "side tabs" using label
 	sideTabItem.on( 'click', function( e ) {
@@ -151,6 +165,107 @@
 
 		tabParent.find( '.sui-tab-item' ).removeClass( 'active' );
 		tabItem.addClass( 'active' );
+	}
+
+	// ============================================================
+	// Color Pickers
+	$( '.sui-colorpicker-input' ).each( function() {
+
+		var $this = $( this );
+
+		$this.wpColorPicker();
+
+	});
+
+	$( '.sui-colorpicker-input' ).each( function() {
+
+		var $this = $( this );
+
+		if ( $this.hasClass( 'wp-color-picker' ) ) {
+			suiColorPicker( $this );
+		}
+	});
+
+	function suiColorPicker( e ) {
+
+		var $suiPickerInput = $( e ),
+			$suiPicker      = $suiPickerInput.closest( '.sui-colorpicker-wrap' ),
+			$suiPickerColor = $suiPicker.find( '.sui-colorpicker-value span[role=button]' ),
+			$suiPickerValue = $suiPicker.find( '.sui-colorpicker-value' ),
+			$suiPickerClear = $suiPickerValue.find( 'button' ),
+			$suiPickerType  = 'hex'
+			;
+
+		var $wpPicker       = $suiPickerInput.closest( '.wp-picker-container' ),
+			$wpPickerButton = $wpPicker.find( '.wp-color-result' ),
+			$wpPickerAlpha  = $wpPickerButton.find( '.color-alpha' ),
+			$wpPickerClear  = $wpPicker.find( '.wp-picker-clear' )
+			;
+
+		// Check if alpha exists
+		if ( true === $suiPickerInput.data( 'alpha' ) ) {
+
+			$suiPickerType = 'rgba';
+
+			// Listen to color change
+			$suiPickerInput.bind( 'change', function() {
+
+				// Change color preview
+				$suiPickerColor.find( 'span' ).css({
+					'background-color': $wpPickerAlpha.css( 'background' )
+				});
+
+				// Change color value
+				$suiPickerValue.find( 'input' ).val( $suiPickerInput.val() );
+
+			});
+
+		} else {
+
+			// Listen to color change
+			$suiPickerInput.bind( 'change', function() {
+
+				// Change color preview
+				$suiPickerColor.find( 'span' ).css({
+					'background-color': $wpPickerButton.css( 'background-color' )
+				});
+
+				// Change color value
+				$suiPickerValue.find( 'input' ).val( $suiPickerInput.val() );
+
+			});
+
+			$wpPickerButton.bind( 'change', function() {
+				console.log( 'this actually works' );
+			});
+		}
+
+		// Add picker type class
+		$suiPicker.find( '.sui-colorpicker' ).addClass( 'sui-colorpicker-' + $suiPickerType );
+
+		// Open iris picker
+		$suiPicker.find( '.sui-button, span[role=button]' ).on( 'click', function( e ) {
+
+			$wpPickerButton.click();
+
+			e.preventDefault();
+			e.stopPropagation();
+
+		});
+
+		// Clear color value
+		$suiPickerClear.on( 'click', function( e ) {
+
+			$wpPickerClear.click();
+			$suiPickerValue.find( 'input' ).val( '' );
+			$suiPickerColor.find( 'span' ).css({
+				'background-color': ''
+			});
+
+			e.preventDefault();
+			e.stopPropagation();
+
+		});
 	}
 
 }( jQuery ) );

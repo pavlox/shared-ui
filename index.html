@@ -3426,6 +3426,10 @@ $('.my-selector').data('SUICodeSnippet').destroy();
 							</li>
 
 							<li class="sui-vertical-tab">
+								<a href="#" role="button" data-tab="demo-element--color-pickers">Color Pickers</a>
+							</li>
+
+							<li class="sui-vertical-tab">
 								<a href="#" role="button" data-tab="demo-element--form-docs">Documentation</a>
 							</li>
 
@@ -4381,6 +4385,77 @@ $('.my-selector').data('SUICodeSnippet').destroy();
 										</div>
 
 									</div>
+
+								</div>
+
+							</div>
+
+						</div>
+
+					</div>
+
+					<!-- TAB: Color Pickers -->
+					<div class="sui-box" data-tab="demo-element--color-pickers" style="display: none;">
+
+						<div class="sui-box-header">
+
+							<h3 class="sui-box-title">Color Pickers</h3>
+
+						</div>
+
+						<div class="sui-box-body">
+
+							<div class="sui-form-field">
+
+								<label class="sui-label">RGB Color Picker</label>
+
+								<div class="sui-colorpicker-wrap">
+
+									<div class="sui-colorpicker" aria-hidden="true">
+										<div class="sui-colorpicker-value">
+											<span role="button">
+												<span style="background-color: #000000;"></span>
+											</span>
+											<input type="text"
+												value="#000000"
+												readonly="readonly" />
+											<button><i class="sui-icon-close" aria-hidden="true"></i></button>
+										</div>
+										<button class="sui-button">Select</button>
+									</div>
+
+									<input type="text"
+										value="#000000"
+										class="sui-colorpicker-input"
+										data-alpha="false" />
+
+								</div>
+
+							</div>
+
+							<div class="sui-form-field">
+
+								<label class="sui-label">RGBA Color Picker</label>
+
+								<div class="sui-colorpicker-wrap">
+
+									<div class="sui-colorpicker" aria-hidden="true">
+										<div class="sui-colorpicker-value">
+											<span role="button">
+												<span style="background-color: rgba(0,0,0,0.8);"></span>
+											</span>
+											<input type="text"
+												value="rgba(0,0,0,0.8)"
+												readonly="readonly" />
+											<button><i class="sui-icon-close" aria-hidden="true"></i></button>
+										</div>
+										<button class="sui-button">Select</button>
+									</div>
+
+									<input type="text"
+										value="rgba(0,0,0,0.8)"
+										class="sui-colorpicker-input"
+										data-alpha="true" />
 
 								</div>
 
@@ -7738,10 +7813,16 @@ $cross-sell-3: 'smartcrawl';
 </div><!-- #wpcontent -->
 
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script src="showcase-assets/build/Chart.min.js?ver=2.3.4"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="showcase-assets/build/Chart.min.js?ver=2.3.4"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+<script src="showcase-assets/build/colorpicker.js"></script>
+
+<script src="showcase-assets/build/iris.min.js"></script>
+<script src="showcase-assets/build/color-picker.js"></script>
+<!-- <script src="showcase-assets/build/wp-color-picker-alpha.min.js"></script> -->
 
 <!-- Do not edit query string versions - updated via release scripts -->
 <script src="dist/js/shared-ui.min.js?ver=2.3.4"></script>
